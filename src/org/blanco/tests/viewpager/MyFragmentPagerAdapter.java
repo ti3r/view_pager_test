@@ -25,7 +25,12 @@ import java.util.List;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
+/**
+ * View Pager Adapter that will handle the different added fragments
+ * on a simple array list.
+ * @author Alexandro Blanco <ti3r.bubblenet@gmail.com>
+ *
+ */
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter{
 
 	List<Fragment> fragments = null;

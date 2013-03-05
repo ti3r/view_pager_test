@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/main_menu_start_anim_current_item" android:checkable="true" android:visible="true" android:numericShortcut="1" android:title="Animar" android:titleCondensed="Ani.." android:enabled="true" android:showAsAction="ifRoom"></item>
+    
+
+</menu>

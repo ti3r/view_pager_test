@@ -23,21 +23,61 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+/**
+ * Main activity of the application
+ * @author Alexandro Blanco <ti3r.bubblenet@gmail.com>
+ *
+ */
 public class MainActivity extends FragmentActivity {
-    /** Called when the activity is first created. */
+    
+	ViewPager pager = null;
+	PageChangeListener pageChangeListener = null;
+	
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         pager = (ViewPager) findViewById(R.id.pager);
+        
         MyFragmentPagerAdapter adapter = 
         		new MyFragmentPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new PlainColorFragment(Color.RED));
         adapter.addFragment(new PlainColorFragment(Color.GREEN));
         adapter.addFragment(new PlainColorFragment(Color.BLUE));
+        pageChangeListener = new PageChangeListener();
+        pager.setOnPageChangeListener(pageChangeListener);
         pager.setAdapter(adapter);
     }
-        
-    ViewPager pager = null;
+
+    private void startAnimationOnCurrentPage(){
+    	MyFragmentPagerAdapter adapter =  
+    			(MyFragmentPagerAdapter) pager.getAdapter();
+    	PlainColorFragment fragment = 
+    			(PlainColorFragment) adapter.getItem(pageChangeListener.getCurrentIndex());
+    	fragment.startAnimationOnClock();
+    }
+    
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = new MenuInflater(this);
+		inflater.inflate(R.menu.main_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+			case R.id.main_menu_start_anim_current_item:
+				startAnimationOnCurrentPage();
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+    
+    
+    
 }
