@@ -2,7 +2,7 @@
  * View Pager Test is a small application to demonstrate how to use
  * this excellent class provided by the android compatibility package
  * to swap between running parts of an application with your finger.
- * Copyright (C) 2011	Alexandro Blanco <ti3r.bubblenet@gmail.com>
+ * Copyright (C) 2013	Alexandro Blanco <ti3r.bubblenet@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,23 +45,16 @@ public class MainActivity extends FragmentActivity {
         
         MyFragmentPagerAdapter adapter = 
         		new MyFragmentPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new PlainColorFragment(Color.RED));
-        adapter.addFragment(new PlainColorFragment(Color.GREEN));
-        adapter.addFragment(new PlainColorFragment(Color.BLUE));
+        adapter.addFragment(PlainColorFragment.newInstance(Color.RED));
+        adapter.addFragment(PlainColorFragment.newInstance(Color.GREEN));
+        adapter.addFragment(PlainColorFragment.newInstance(Color.BLUE));
         pageChangeListener = new PageChangeListener();
         pager.setOnPageChangeListener(pageChangeListener);
+        pager.setPageTransformer(true, new PageTransformer());
         pager.setAdapter(adapter);
     }
-
-    private void startAnimationOnCurrentPage(){
-    	MyFragmentPagerAdapter adapter =  
-    			(MyFragmentPagerAdapter) pager.getAdapter();
-    	PlainColorFragment fragment = 
-    			(PlainColorFragment) adapter.getItem(pageChangeListener.getCurrentIndex());
-    	fragment.startAnimationOnClock();
-    }
     
-	@Override
+  @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = new MenuInflater(this);
 		inflater.inflate(R.menu.main_menu, menu);
@@ -78,6 +71,12 @@ public class MainActivity extends FragmentActivity {
 		}
 	}
     
-    
+	private void startAnimationOnCurrentPage(){
+    MyFragmentPagerAdapter adapter =  
+        (MyFragmentPagerAdapter) pager.getAdapter();
+    PlainColorFragment fragment = 
+        (PlainColorFragment) adapter.getItem(pageChangeListener.getCurrentIndex());
+    fragment.startAnimationOnClock();
+  }
     
 }
